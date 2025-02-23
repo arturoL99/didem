@@ -1,0 +1,98 @@
+.chatContainer {
+  text-align: center;
+  padding: 20px;
+  background-image: url("../../images/layered-waves-haikei.svg");
+  height: 25dvh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  background-position: bottom;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transition: 800ms all ease-in-out;
+}
+
+.expanded {
+  height: 100dvh;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.inputWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  width: 70%;
+}
+
+.input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #92b8d4;
+  border-radius: 20px;
+  font-size: 1rem;
+  outline: none;
+  background-color: #eaf7ff;
+  color: #252e64;
+}
+
+.sendButton {
+  background: #007bff;
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.typingIndicator {
+  font-style: italic;
+  margin-top: 10px;
+  color: #666;
+}
+
+.chat {
+  //media x width
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  &_message {
+    text-align: start;
+    width: 50%;
+    border: 1px solid #92b8d4;
+    border-radius: 20px;
+    font-size: 1rem;
+    outline: none;
+    background-color: #f5e4c6;
+    color: #252e64;
+    padding: 10px;
+
+    &_container {
+      display: flex;
+      justify-content: flex-end;
+
+      .query {
+        background-color: #eaf7ff;
+      }
+    }
+  }
+
+  .query {
+    justify-content: flex-start;
+  }
+}
