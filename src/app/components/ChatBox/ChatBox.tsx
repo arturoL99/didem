@@ -21,13 +21,15 @@ const ChatBox: FC<Props> = ({ started, setStarted }) => {
     const [isTyping, setIsTyping] = useState(false);
 
     const fetchData = async () => {
+        const queryMessage = message;
         setStarted(true);
         addMessage(true, message);
+        setMessage("... sta scrivendo ...");
         try {
             const response = await fetch("/api/query", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ query: message }),
+                body: JSON.stringify({ query: queryMessage }),
             });
 
             if (!response.ok) {
@@ -85,7 +87,7 @@ const ChatBox: FC<Props> = ({ started, setStarted }) => {
 
                 </button>
             </div>
-            {isTyping && <p className="typingIndicator">... sta scrivendo ...</p>}
+            
 
 
         </section>
