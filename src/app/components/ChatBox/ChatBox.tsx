@@ -52,19 +52,23 @@ const ChatBox: FC<Props> = ({ started, setStarted }) => {
         setStarted(true);
         addMessage(true, message);
         setMessage("... sta scrivendo ...");
+    
         try {
+            const formData = new URLSearchParams();
+            formData.append("query", queryMessage);
+    
             const response = await fetch("https://rag-libri-2.onrender.com/query-all", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded",
                 },
-                body: JSON.stringify({ query: queryMessage }),
+                body: formData.toString(),
             });
-
+    
             if (!response.ok) {
                 throw new Error(`Error: ${response.statusText}`);
             }
-
+    
             const data = await response.json();
             setIsTyping(false);
             setMessage("");
@@ -76,6 +80,7 @@ const ChatBox: FC<Props> = ({ started, setStarted }) => {
             return null;
         }
     };
+    
 
     const handleSend = () => {
         if (message.trim() !== "") {
