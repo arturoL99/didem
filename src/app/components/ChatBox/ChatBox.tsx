@@ -20,38 +20,65 @@ const ChatBox: FC<Props> = ({ started, setStarted }) => {
     const [chat, setChat] = useState<Message[]>([]);
     const [isTyping, setIsTyping] = useState(false);
 
-    const fetchData = async () => {
-        const queryMessage = message;
-        setStarted(true);
-        addMessage(true, message);
-        setMessage("... sta scrivendo ...");
+    // const fetchData = async () => {
+    //     const queryMessage = message;
+    //     setStarted(true);
+    //     addMessage(true, message);
+    //     setMessage("... sta scrivendo ...");
+    //     try {
+    //         const response = await fetch("/api/query", {
+    //             method: "POST",
+    //             headers: { "Content-Type": "application/json" },
+    //             body: JSON.stringify({ query: queryMessage }),
+    //         });
+
+    //         if (!response.ok) {
+    //             throw new Error(`HTTP error! Status: ${response.status}`);
+    //         }
+
+
+    //         const data = await response.json();
+    //         setIsTyping(false);
+    //         setMessage("");
+    //         console.log("Response from API:", data);
+    //         addMessage(false, data.answer);
+    //     } catch (error) {
+    //         console.error("Error fetching data:", error);
+    //     }
+    // };
+
+    const queryAll = async (query: string) => {
         try {
-            const response = await fetch("/api/query", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ query: queryMessage }),
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-
-
-            const data = await response.json();
-            setIsTyping(false);
-            setMessage("");
-            console.log("Response from API:", data);
-            addMessage(false, data.answer);
+          const response = await fetch("https://rag-libri-2.onrender.com/query-all", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: new URLSearchParams({ query }).toString(),
+          });
+      
+          if (!response.ok) {
+            throw new Error(`Error: ${response.statusText}`);
+          }
+      
+          const data = await response.json();
+          setIsTyping(false);
+          setMessage("");
+          addMessage(false, data.answer);
+          console.log("API Response:", data);
+          return data;
         } catch (error) {
-            console.error("Error fetching data:", error);
+          console.error("Error querying API:", error);
+          return null;
         }
-    };
+      };
 
     const handleSend = () => {
         if (message.trim() !== "") {
             setIsTyping(true);
             console.log(message)
-            fetchData();
+            // fetchData();
+            queryAll(message);
         }
     };
 
