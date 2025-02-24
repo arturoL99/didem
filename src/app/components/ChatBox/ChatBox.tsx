@@ -47,38 +47,42 @@ const ChatBox: FC<Props> = ({ started, setStarted }) => {
     //     }
     // };
 
-    const queryAll = async (query: string) => {
+    const queryAll = async () => {
+        const queryMessage = message;
+        setStarted(true);
+        addMessage(true, message);
+        setMessage("... sta scrivendo ...");
         try {
-          const response = await fetch("https://rag-libri-2.onrender.com/query-all", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-            },
-            body: new URLSearchParams({ query }).toString(),
-          });
-      
-          if (!response.ok) {
-            throw new Error(`Error: ${response.statusText}`);
-          }
-      
-          const data = await response.json();
-          setIsTyping(false);
-          setMessage("");
-          addMessage(false, data.answer);
-          console.log("API Response:", data);
-          return data;
+            const response = await fetch("https://rag-libri-2.onrender.com/query-all", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: new URLSearchParams({ queryMessage }).toString(),
+            });
+
+            if (!response.ok) {
+                throw new Error(`Error: ${response.statusText}`);
+            }
+
+            const data = await response.json();
+            setIsTyping(false);
+            setMessage("");
+            addMessage(false, data.answer);
+            console.log("API Response:", data);
+            return data;
         } catch (error) {
-          console.error("Error querying API:", error);
-          return null;
+            console.error("Error querying API:", error);
+            return null;
         }
-      };
+    };
 
     const handleSend = () => {
         if (message.trim() !== "") {
             setIsTyping(true);
             console.log(message)
             // fetchData();
-            queryAll(message);
+            queryAll();
         }
     };
 
@@ -114,7 +118,7 @@ const ChatBox: FC<Props> = ({ started, setStarted }) => {
 
                 </button>
             </div>
-            
+
 
 
         </section>
