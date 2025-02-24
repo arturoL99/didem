@@ -58,7 +58,7 @@ const ChatBox: FC<Props> = ({ started, setStarted }) => {
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded",
                 },
-                body: new URLSearchParams({ queryMessage }).toString(),
+                body: new URLSearchParams({ queryMessage }),
             });
 
             if (!response.ok) {
